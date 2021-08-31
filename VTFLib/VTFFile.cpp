@@ -18,12 +18,14 @@
 // Note: VTF creation requires nvDXTLib and has been
 //       tested with version 8.31.1127.1645, availible here:
 //       http://developer.nvidia.com/object/dds_utilities_legacy.html
+#define USE_NVDXT
 
 #ifdef USE_NVDXT
 	// Disable all the warnings in the nvDXTLib.
 #	pragma warning(disable: 4018)
 #	pragma warning(disable: 4244)
 #	pragma warning(disable: 4267)
+#	pragma comment(lib, "nvdxtcompilefix.lib")
 
 #	if _MSC_VER >= 1400 // Visual Studio 2005
 #		include "dxtlib\dxtlib.h"
@@ -1040,22 +1042,26 @@ vlBool CVTFFile::IsLoaded() const
 
 vlBool CVTFFile::Load(const vlChar *cFileName, vlBool bHeaderOnly)
 {
-	return this->Load(&IO::Readers::CFileReader(cFileName), bHeaderOnly);
+	auto fileReader = IO::Readers::CFileReader(cFileName);
+	return this->Load(&fileReader, bHeaderOnly);
 }
 
 vlBool CVTFFile::Load(const vlVoid *lpData, vlUInt uiBufferSize, vlBool bHeaderOnly)
 {
-	return this->Load(&IO::Readers::CMemoryReader(lpData, uiBufferSize), bHeaderOnly);
+	auto memoryReader = IO::Readers::CMemoryReader(lpData, uiBufferSize);
+	return this->Load(&memoryReader, bHeaderOnly);
 }
 
 vlBool CVTFFile::Load(vlVoid *pUserData, vlBool bHeaderOnly)
 {
-	return this->Load(&IO::Readers::CProcReader(pUserData), bHeaderOnly);
+	auto procReader = IO::Readers::CProcReader(pUserData);
+	return this->Load(&procReader, bHeaderOnly);
 }
 
 vlBool CVTFFile::Save(const vlChar *cFileName) const
 {
-	return this->Save(&IO::Writers::CFileWriter(cFileName));
+	auto fileWriter = IO::Writers::CFileWriter(cFileName);
+	return this->Save(&fileWriter);
 }
 
 vlBool CVTFFile::Save(vlVoid *lpData, vlUInt uiBufferSize, vlUInt &uiSize) const
@@ -1073,7 +1079,8 @@ vlBool CVTFFile::Save(vlVoid *lpData, vlUInt uiBufferSize, vlUInt &uiSize) const
 
 vlBool CVTFFile::Save(vlVoid *pUserData) const
 {
-	return this->Save(&IO::Writers::CProcWriter(pUserData));
+	auto procWriter = IO::Writers::CProcWriter(pUserData);
+	return this->Save(&procWriter);
 }
 
 // -----------------------------------------------------------------------------------

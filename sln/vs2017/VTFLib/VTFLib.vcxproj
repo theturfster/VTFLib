@@ -74,6 +74,15 @@
     <ClInclude Include="..\..\..\VTFLib\Writers.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\VTFLib\dds\ConvertColor.h" />
+    <ClInclude Include="..\..\..\VTFLib\dds\ddsTypes.h" />
+    <ClInclude Include="..\..\..\VTFLib\dds\nvdxt_options.h" />
+    <ClInclude Include="..\..\..\VTFLib\dds\nvErrorCodes.h" />
+    <ClInclude Include="..\..\..\VTFLib\dds\tPixel.h" />
+    <ClInclude Include="..\..\..\VTFLib\dds\tVector.h" />
+    <ClInclude Include="..\..\..\VTFLib\dxtlib\dxtlib.h" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="..\..\..\VTFLib\Resource.aps" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +112,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -110,6 +120,8 @@
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <SpectreMitigation>Spectre</SpectreMitigation>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -216,12 +228,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <EnablePREfast>true</EnablePREfast>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalDependencies>legacy_stdio_definitions.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

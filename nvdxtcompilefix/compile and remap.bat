@@ -1,0 +1,1 @@
+cl.exe /EHsc /LD nvdxtcompilefix.cpp /link /export:?_Xran@_String_base@std@@SAXXZ=?_Xran2008@_String_base_2008@std2008@@QEBAXXZ /export:?_Xlen@_String_base@std@@SAXXZ=?_Xlen2008@_String_base_2008@std2008@@QEBAXXZ /export:??0exception@std@@QEAA@AEBQEBD@Z=?exception@exception_2008@std2008@@QEAAXAEBQEBD@Z
