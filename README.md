@@ -27,6 +27,12 @@ included, but nvDXTLib does not come with the correct .lib files to link with. n
 
 http://developer.nvidia.com/object/dds_utilities_legacy.html
 
+## Getting VTFLib To Compile With NVDXT Support
+
+- Grab the DDS Utilities from the link above and install them, then copy the **dds** and **dxtlib** directories from the **LIBS\inc** directory to the **VTFLib\VTFLib** directory (or modify the csproj file to not include them in specifically _those_ locations, but I'm lazy, so...), and move the libs to an appropriate location. 
+- Go into the **nvdxtcompilefix** directory and prepare the lib and dll files needed to fix the missing externals nvdxtlibmt.vc8.x64.lib can't find because, well, 2003 is ages ago and Microsoft changed things around. Then move the dll and lib to the **sln\vs2017\VTFLib** directory (and don't forget to include the dll in whatever final project you use VTFLib in). I've included a batch file that _should_ compile and remap the functions to the locations the NVDXT lib expects them at, but if you run into problems, see the answer by Alatun in this thread (https://stackoverflow.com/questions/12074439/) on how to generate the remaps yourself.
+- This *should* now compile without problems...
+
 ## VTFCmd Usage
 
 ```
@@ -78,6 +84,9 @@ vtfcmd.exe -folder "C:\output\*.vtf" -output "C:\input" -exportformat "jpg"
 ```
 
 ## Library Changelog
+
+  v1.3.42
+  - Hacked in compile support for newer Visual Studio versions for VTFLib.
 
   v1.3.2
   - Improved support for version 7.5 of the VTF format.
